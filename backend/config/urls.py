@@ -15,7 +15,35 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Aermetric",
+        default_version='v1',
+        description="Aetmetric test task api",
+        contact=openapi.Contact(email="sultanbek9899@gmail.com"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', schema_view.with_ui('swagger',
+                                 cache_timeout=0), name='schema-swagger-ui'),
+
+
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

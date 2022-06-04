@@ -37,6 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'drf_yasg',
+
+    #apps
+    'backend.apps.api',
+    'backend.apps.service'
 ]
 
 MIDDLEWARE = [
@@ -54,7 +60,7 @@ ROOT_URLCONF = 'backend.config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,8 +85,8 @@ DATABASES = {
         'NAME': os.getenv('POSTGRES_DB', default="aircraft"),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', default="aircraft2022"),
         'USER': os.getenv('POSTGRES_USER', default="aircraft_user"),
-        'HOST': os.getenv('POSTGRES_HOST', default="db"),
-        'PORT': os.getenv('POSTGRES_PORT', default=5432),
+        'HOST': os.getenv('POSTGRES_HOST', default="127.0.0.1"),
+        'PORT': os.getenv('POSTGRES_PORT', default=5435),
     }
 }
 
