@@ -11,32 +11,19 @@ class Aircraft(models.Model):
         return self.name
 
 
+class Type(models.Model):
+    name = models.CharField("Type", max_length=20, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Event(models.Model):
-    STATUS_STARTED = 0
-    STATUS_IN_PROGRESS = 1
-    STATUS_SUSPEND = 2
-    STATUS_KICKBACK = 3
-    STATUS_FINISHED = 4
-    EVENT_STATUSES = (
-        (STATUS_STARTED, "Started"),
-        (STATUS_IN_PROGRESS, "In progress"),
-        (STATUS_KICKBACK, "Kickback"),
-        (STATUS_SUSPEND, "Suspend"),
-        (STATUS_FINISHED, "Finished")
-    )
-    PRIORITY_EASY = 0
-    PRIORITY_USUAL = 1
-    PRIORITY_HARD = 2
-    PRIORITIES = (
-        (PRIORITY_EASY, "Easy"),
-        (PRIORITY_USUAL, "Usual"),
-        (PRIORITY_HARD, "Hard"),
-    )
 
     aircraft = models.ForeignKey(Aircraft, on_delete=models.PROTECT, related_name="aircraft", db_index=True)
-    type = models.CharField(max_length=15, choices=EventType.choices, db_index=True)
-    priority = models.PositiveSmallIntegerField(choices=PRIORITIES, db_index=True)
-    status = models.PositiveSmallIntegerField(choices=EVENT_STATUSES, db_index=True)
+    type = models.ForeignKey(Type, on_delete=models.PROTECT, related_name="types")
+    priority = models.CharField(max_length=10)
+    status = models.CharField(max_length=15)
     info_count = models.IntegerField()
     errors_count = models.IntegerField()
 
@@ -50,5 +37,7 @@ class Event(models.Model):
 
     def __str__(self):
         return f"Event #{self.pk}-{self.status}"
+
+
 
 
