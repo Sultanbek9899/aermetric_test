@@ -39,9 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'drf_yasg',
+    'rest_framework',
 
     #apps
-    'backend.apps.api',
     'backend.apps.service'
 ]
 
